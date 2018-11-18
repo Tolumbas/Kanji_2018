@@ -1,0 +1,199 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<script src="three.min.js"></script>
+		<script src="hangul.js"></script>
+	</head>
+	
+	<body onload="main()">
+		<h1>ф.н. 81687 &ndash; група 2 &ndash; Антон Стоянов</h1>
+		<script>
+			
+
+			
+			
+			var mat = new THREE.MeshPhongMaterial({color:'gray',shininess:100});
+			// let mat = new THREE.MeshPhongMaterial();
+			const smooth = .15;
+			function addShape(arr){
+				// arr = [arr[1]];
+				arr.forEach((path,index)=>{
+					var p = new THREE.Shape();
+					
+					var cx=.06,cy=-.05; //Коефициент
+					var tx=-20,ty=10; // Транслация
+					p.moveTo(path[0]*cx+tx,path[1]*cy+ty);
+					path.push(path[0],path[1]);
+					for (var a=2;a<path.length;a+=2){
+						
+						//https://medium.com/@francoisromain/smooth-a-svg-path-with-cubic-bezier-curves-e37b49d46c74
+						y=!false;
+
+						if (a+3<path.length && y){
+							
+							var dxprev = path[a] - (path[a-4]||path[a-2]);
+							var dyprev = path[a+1] - (path[a-3]||path[a-1]);
+							
+							var dxnext = path[a-2] - (path[a+2]||path[a]);
+							var dynext = path[a-1] - (path[a+3]||path[a+1]);
+
+							dxprev = dxprev*smooth;
+							dyprev = dyprev*smooth;
+							dxnext = dxnext*smooth;
+							dynext = dynext*smooth;
+							p.bezierCurveTo(
+								(path[a-2]+dxprev)*cx+tx,
+								(path[a-1]+dyprev)*cy+ty,
+								(path[a  ]+dxnext)*cx+tx,
+								(path[a+1]+dynext)*cy+ty,
+								path[a]*cx+tx,
+								path[a+1]*cy+ty
+								)
+
+						}
+						else{
+							p.lineTo(path[a]*cx+tx,path[a+1]*cy+ty);
+						}
+					}
+					
+					var extrudeSettings = { amount: 2,bevelEnabled:false,  bevelSize: 1, bevelThickness: 1 };
+					var geometry = new THREE.ExtrudeGeometry( p, extrudeSettings );
+					var mesh = new THREE.Mesh( geometry, mat);
+					word.add(mesh);
+				})
+
+
+			}
+			//mspaint FTW:
+			addShape([
+			[
+				3,52,
+				55,55,
+				186,50,
+				162,157,
+				141,159,
+				154,63,
+				63,71,
+				61,171,
+				41,196,
+				30,74,
+			],
+			[
+				177,155,
+				176,175,
+				38,166,
+			],
+			[
+				200,0,
+				262,14,
+				264,132,
+				287,133,
+				329,121,
+				332,147,
+				264,149,
+				263,209,
+				235,230,
+				236,32,
+				200,0,
+			],
+			[
+				421,16,
+				458,30,
+				447,39,
+				479,52,
+				500,81,
+				512,98,
+				590,96,
+				590,32,
+				545,5,
+				620,17,
+				621,165,
+				604,202,
+				590,187,
+				590,115,
+				514,120,
+				498,147,
+				473,172,
+				432,177,
+				382,163,
+				351,126,
+				351,80,
+				389,43,
+				422,41,
+				421,16,
+
+				433,61,
+				415,63,
+				396,72,
+				380,84,
+				375,109,
+				386,135,
+				429,154,
+				465,145,
+				484,105,
+				474,77,
+				433,61
+			],
+			[
+				143,202,
+				205,218,
+				193,240,
+				194,257,
+				250,296,
+				294,332,
+				287,351,
+				266,347,
+				183,265,
+				134,317,
+				75,350,
+				43,350,
+				94,317,
+				169,233,
+			],
+			[
+				363,213,
+				415,221,
+				418,337,
+				395,348,
+				395,239,
+			],
+			[
+				402,247,
+				483,247,
+				483,264,
+				402,264,
+			],
+			[
+				405,318,
+				481,317,
+				481,333,
+				405,333
+			],
+			[
+				451,196,
+				497,207,
+				493,333,
+				475,343,
+				475,219,
+			],
+			[
+				555,193,
+				615,215,
+				594,253,
+				655,320,
+				654,343,
+				636,340,
+				586,269,
+				547,315,
+				498,352,
+				543,294,
+				581,223,
+
+			]
+
+			]);
+
+			
+		</script>
+	</body>
+</html>
